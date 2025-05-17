@@ -1,54 +1,64 @@
-// Основные константы
-const MAX_EXAMPLES = 30; // Максимальное количество примеров
+// Основные настройки
+const MAX_EXAMPLES = 30;
+const generatedExamples = new Set(); // Для отслеживания уникальности
 let currentMin = 1;
 let currentMax = 6;
 
-// Генерация примеров с проверкой диапазона
+// Главная функция генерации
 function generateExamples() {
     const min = parseInt(document.getElementById('min').value);
     const max = parseInt(document.getElementById('max').value);
     
-    // Валидация ввода
-    if (min >= max) {
-        alert('Максимальное число должно быть больше минимального!');
-        return;
+    // Сброс при изменении диапазона
+    if (min !== currentMin || max !== currentMax) {
+        generatedExamples.clear();
+        currentMin = min;
+        currentMax = max;
     }
     
-    currentMin = min;
-    currentMax = max;
+    // Валидация
+    if (min >= max) {
+        alert('Максимальное число должно быть больше минимального! 🦁');
+        return;
+    }
     
     const examplesContainer = document.getElementById('examples');
     examplesContainer.innerHTML = '';
     
     let generated = 0;
-    while (generated < MAX_EXAMPLES) {
+    let attempts = 0;
+    
+    while (generated < MAX_EXAMPLES && attempts < 100) {
         const example = createValidExample(min, max);
-        if (example) {
+        attempts++;
+        
+        if (example && !generatedExamples.has(example)) {
             examplesContainer.innerHTML += `
                 <div class="example">
                     ${example}
-                    <span class="hint" title="Нажмите для решения">🔍</span>
                 </div>`;
+            generatedExamples.add(example);
             generated++;
+            attempts = 0;
         }
     }
     
-    // Добавляем обработчики для подсказок
-    document.querySelectorAll('.hint').forEach(hint => {
-        hint.addEventListener('click', showSolution);
-    });
+    if (generated < MAX_EXAMPLES) {
+        alert(`Не удалось создать все уникальные примеры 😿
+Создано: ${generated} из ${MAX_EXAMPLES}`);
+    }
 }
 
-// Создание корректного примера с проверкой диапазона
+// Создание примера с проверкой
 function createValidExample(min, max) {
-    const types = [
-        generateMissingNumber,   // Пропущенное число
-        generateFullEquation,    // Полный пример
-        generateMissingOperator  // Пропущенный оператор
+    const generators = [
+        generateMissingNumber,
+        generateFullEquation,
+        generateMissingOperator
     ];
     
-    for (let i = 0; i < 10; i++) { // Попыток для генерации
-        const example = types[Math.floor(Math.random() * types.length)](min, max);
+    for (let i = 0; i < 10; i++) {
+        const example = generators[Math.floor(Math.random() * generators.length)](min, max);
         if (example && checkRange(example, min, max)) {
             return example;
         }
@@ -56,7 +66,7 @@ function createValidExample(min, max) {
     return null;
 }
 
-// Проверка всех чисел в примере
+// Проверка диапазона
 function checkRange(example, min, max) {
     const numbers = example.match(/\d+/g) || [];
     return numbers.every(num => {
@@ -110,37 +120,8 @@ function randomInt(min, max) {
 
 function clearExamples() {
     document.getElementById('examples').innerHTML = '';
+    generatedExamples.clear();
 }
 
-function showSolution(e) {
-    const example = e.target.parentElement;
-    const placeholder = example.querySelector('.placeholder');
-    const equation = example.textContent;
-    
-    // Логика решения примера
-    if (equation.includes('+')) {
-        placeholder.textContent = equation.split('=')[1].trim() - equation.split('+')[1].split('=')[0].trim();
-    } else if (equation.includes('-')) {
-        placeholder.textContent = equation.split('=')[1].trim() + equation.split('-')[1].split('=')[0].trim();
-    }
-    
-    e.target.remove();
-}
-
-// Инициализация подсказок
-document.addEventListener('mousemove', (e) => {
-    const tooltip = document.getElementById('tooltip');
-    const target = e.target.closest('.tooltip');
-    
-    if (target) {
-        tooltip.style.left = `${e.pageX + 15}px`;
-        tooltip.style.top = `${e.pageY + 15}px`;
-        tooltip.textContent = target.dataset.title;
-        tooltip.style.opacity = '1';
-    } else {
-        tooltip.style.opacity = '0';
-    }
-});
-
-// Первоначальная генерация
+// Запуск при загрузке
 generateExamples();
