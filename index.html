@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор математических примеров</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Основной контейнер -->
+    <div class="container">
+        <h1>🧮 Генератор примеров</h1>
+        
+        <!-- Форма ввода диапазона -->
+        <div class="input-section">
+            <label for="min">Минимальное число:</label>
+            <input type="number" id="min" value="1" min="1">
+            
+            <label for="max">Максимальное число:</label>
+            <input type="number" id="max" value="10" min="2">
+            
+            <button onclick="generateExamples()">Создать примеры</button>
+        </div>
+
+        <!-- Контейнер для вывода примеров -->
+        <div id="examples" class="examples-grid"></div>
+    </div>
+
+    <!-- Подключаем JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
