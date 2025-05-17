@@ -1,10 +1,11 @@
-/* Базовые настройки */
+/* Базовые стили */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 20px;
     background: #f0f7ff;
+    color: #2c3e50;
 }
 
 /* Основной контейнер */
@@ -13,61 +14,147 @@ body {
     margin: 0 auto;
     background: white;
     padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Секция ввода */
-.input-section {
-    display: grid;
-    gap: 1rem;
-    margin-bottom: 2rem;
+/* Панель управления */
+.control-panel {
     background: #f8f9fa;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
 }
 
 label {
-    font-weight: 600;
-    color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-weight: 500;
 }
 
 input {
     padding: 0.8rem;
     border: 2px solid #3498db;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 1rem;
-    width: 200px;
+    width: 100px;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #2980b9;
+    outline: none;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
 }
 
 button {
-    background: #3498db;
-    color: white;
-    border: none;
     padding: 1rem 2rem;
-    border-radius: 6px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
-    transition: background 0.3s ease;
+    transition: transform 0.2s, opacity 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.generate-btn {
+    background: #3498db;
+    color: white;
+}
+
+.clear-btn {
+    background: #e74c3c;
+    color: white;
 }
 
 button:hover {
-    background: #2980b9;
+    transform: translateY(-2px);
+    opacity: 0.9;
 }
 
-/* Сетка примеров */
+/* Примеры */
 .examples-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: 1.2rem;
+    counter-reset: example-counter;
 }
 
 .example {
     background: #e8f4ff;
-    padding: 1rem;
+    padding: 1.5rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    position: relative;
+    counter-increment: example-counter;
+    border-left: 5px solid #3498db;
+}
+
+.example::before {
+    content: counter(example-counter);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 0.8rem;
+    color: #3498db;
+}
+
+.placeholder {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border: 2px dashed #3498db;
     border-radius: 6px;
-    font-size: 1.2rem;
-    text-align: center;
-    border-left: 4px solid #3498db;
+    margin: 0 5px;
+    vertical-align: middle;
+}
+
+/* Подсказки */
+.tooltip {
+    position: relative;
+    cursor: help;
+    border-bottom: 1px dotted #3498db;
+}
+
+.tooltip-box {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    .input-group {
+        flex-direction: column;
+    }
+    
+    input {
+        width: 100%;
+    }
+    
+    .examples-grid {
+        grid-template-columns: 1fr;
+    }
 }
