@@ -3,38 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Генератор математических примеров</title>
+    <title>Звероматика</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>🔢 Математический тренажёр</h1>
+        <h1>🐾 Звероматика 🦁</h1>
         
         <!-- Панель управления -->
         <div class="control-panel">
             <div class="input-group">
                 <label>
-                    <span class="tooltip" data-title="Минимальное число в примерах">От:</span>
-                    <input type="number" id="min" value="1" min="1">
+                    <span>От:</span>
+                    <input type="number" id="min" value="1" min="1" class="animal-input">
                 </label>
                 <label>
-                    <span class="tooltip" data-title="Максимальное число в примерах">До:</span>
-                    <input type="number" id="max" value="6" min="2">
+                    <span>До:</span>
+                    <input type="number" id="max" value="6" min="2" class="animal-input">
                 </label>
             </div>
             
             <div class="button-group">
-                <button onclick="generateExamples()" class="generate-btn">🎲 Создать</button>
-                <button onclick="clearExamples()" class="clear-btn">🧹 Очистить</button>
+                <button onclick="generateExamples()" class="generate-btn">🎉 Новые примеры</button>
+                <button onclick="clearExamples()" class="clear-btn">🌈 Очистить</button>
             </div>
         </div>
 
         <!-- Контейнер для примеров -->
         <div id="examples" class="examples-grid"></div>
     </div>
-
-    <!-- Подсказка при наведении -->
-    <div id="tooltip" class="tooltip-box"></div>
 
     <script src="script.js"></script>
 </body>
