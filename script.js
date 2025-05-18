@@ -1,127 +1,60 @@
-// Основные настройки
-const MAX_EXAMPLES = 30;
-const generatedExamples = new Set(); // Для отслеживания уникальности
-let currentMin = 1;
-let currentMax = 6;
-
-// Главная функция генерации
-function generateExamples() {
-    const min = parseInt(document.getElementById('min').value);
-    const max = parseInt(document.getElementById('max').value);
-    
-    // Сброс при изменении диапазона
-    if (min !== currentMin || max !== currentMax) {
-        generatedExamples.clear();
-        currentMin = min;
-        currentMax = max;
-    }
-    
-    // Валидация
-    if (min >= max) {
-        alert('Максимальное число должно быть больше минимального! 🦁');
-        return;
-    }
-    
-    const examplesContainer = document.getElementById('examples');
-    examplesContainer.innerHTML = '';
-    
-    let generated = 0;
-    let attempts = 0;
-    
-    while (generated < MAX_EXAMPLES && attempts < 100) {
-        const example = createValidExample(min, max);
-        attempts++;
-        
-        if (example && !generatedExamples.has(example)) {
-            examplesContainer.innerHTML += `
-                <div class="example">
-                    ${example}
-                </div>`;
-            generatedExamples.add(example);
-            generated++;
-            attempts = 0;
-        }
-    }
-    
-    if (generated < MAX_EXAMPLES) {
-        alert(`Не удалось создать все уникальные примеры 😿
-Создано: ${generated} из ${MAX_EXAMPLES}`);
-    }
-}
-
-// Создание примера с проверкой
-function createValidExample(min, max) {
-    const generators = [
-        generateMissingNumber,
-        generateFullEquation,
-        generateMissingOperator
-    ];
-    
-    for (let i = 0; i < 10; i++) {
-        const example = generators[Math.floor(Math.random() * generators.length)](min, max);
-        if (example && checkRange(example, min, max)) {
-            return example;
-        }
-    }
-    return null;
-}
-
-// Проверка диапазона
-function checkRange(example, min, max) {
-    const numbers = example.match(/\d+/g) || [];
-    return numbers.every(num => {
-        const n = parseInt(num);
-        return n >= min && n <= max;
+// Навигация и базовые функции
+document.addEventListener('DOMContentLoaded', () => {
+  // Инициализация навигации
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Удаляем активный класс у всех кнопок
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      
+      // Добавляем активный класс текущей кнопке
+      this.classList.add('active');
+      
+      // Получаем целевую секцию
+      const sectionId = this.dataset.section;
+      
+      // Скрываем все секции
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Показываем целевую секцию
+      document.getElementById(sectionId).classList.add('active');
+      
+      // Меняем фон тела документа
+      document.body.className = `${sectionId}-bg`;
     });
-}
+  });
 
-// Генераторы примеров
-function generateMissingNumber(min, max) {
-    const a = randomInt(min, max);
-    const result = randomInt(min, max);
-    const b = result - a;
-    
-    if (b >= min && b <= max) {
-        return `<div class="placeholder"></div> + ${a} = ${result}`;
-    }
-    return null;
-}
+  // Активируем начальную секцию
+  document.querySelector('.nav-btn.active').click();
+});
 
-function generateFullEquation(min, max) {
-    const a = randomInt(min, max);
-    const b = randomInt(min, max);
-    const op = Math.random() > 0.5 ? '+' : '-';
-    const result = op === '+' ? a + b : a - b;
-    
-    if (result >= min && result <= max) {
-        return `${a} ${op} ${b} = <div class="placeholder"></div>`;
-    }
-    return null;
-}
+// Функция показа праздничной анимации
+function showCelebration(message) {
+  const celebration = document.getElementById('celebration');
+  
+  // Создаем сообщение
+  const messageElement = document.createElement('div');
+  messageElement.className = 'celebration-message animate__animated animate__bounceIn';
+  messageElement.innerHTML = `
+    <div>${message}</div>
+    <div class="animate__animated animate__tada" style="font-size: 3rem;">🎉</div>
+  `;
 
-function generateMissingOperator(min, max) {
-    const a = randomInt(min, max);
-    const b = randomInt(min, max);
-    const result = randomInt(min, max);
-    
-    if (a + b === result) {
-        return `${a} <div class="placeholder"></div> ${b} = ${result}`;
-    }
-    if (a - b === result) {
-        return `${a} <div class="placeholder"></div> ${b} = ${result}`;
-    }
-    return null;
-}
+  // Создаем конфетти
+  for(let i = 0; i < 50; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = `${Math.random() * 100}%`;
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    confetti.style.animationDelay = `${Math.random() * 2}s`;
+    celebration.appendChild(confetti);
+  }
 
-// Вспомогательные функции
-function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  celebration.appendChild(messageElement);
+  
+  // Удаляем анимацию через 3 секунды
+  setTimeout(() => {
+    celebration.innerHTML = '';
+  }, 3000);
 }
-
-function clearExamples() {
-    document.getElementById('examples').innerHTML = '';
-    generatedExamples.clear();
-}
-
-// Запуск при загрузке
-generateExamples();
