@@ -2,69 +2,26 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Учимся играя!</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <title>Образовательное приложение</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Навигация -->
-    <nav class="main-nav">
-        <button class="nav-btn active" data-section="math">Математика</button>
-        <button class="nav-btn" data-section="lang">Русский язык</button>
-    </nav>
-
     <div class="container">
-        <!-- Секция математики -->
-        <section id="math" class="content-section active">
-            <h1>🎲 Весёлый счёт</h1>
-            
-            <div class="control-panel">
-                <div class="input-group">
-                    <label>
-                        <span>От:</span>
-                        <input type="number" id="math-min" value="1" min="1">
-                    </label>
-                    <label>
-                        <span>До:</span>
-                        <input type="number" id="math-max" value="6" min="2">
-                    </label>
-                </div>
-                
-                <div class="button-group">
-                    <button onclick="generateMathExamples('list')" class="generate-btn">📜 Список</button>
-                    <button onclick="generateMathExamples('interactive')" class="generate-btn">🎮 Решать</button>
-                    <button onclick="clearMathExamples()" class="clear-btn">🧹 Очистить</button>
-                </div>
-            </div>
+        <div class="controls">
+            <input type="number" id="min" placeholder="Минимум" min="1">
+            <input type="number" id="max" placeholder="Максимум" min="1">
+            <button onclick="generateExamples()">Сгенерировать</button>
+            <button onclick="clearAll()">Очистить</button>
+        </div>
+        
+        <div class="mode-buttons">
+            <button onclick="showList()">Список примеров</button>
+            <button onclick="showSolve()">Решать</button>
+        </div>
 
-            <div id="math-examples" class="examples-container"></div>
-        </section>
-
-        <!-- Секция русского языка -->
-        <section id="lang" class="content-section">
-            <h1>📚 Словарные секреты</h1>
-            
-            <div class="control-panel">
-                <div class="length-buttons">
-                    <button data-length="3" class="length-btn">3 буквы</button>
-                    <button data-length="4" class="length-btn">4 буквы</button>
-                    <button data-length="5" class="length-btn">5 букв</button>
-                </div>
-            </div>
-
-            <div id="lang-examples" class="lang-container"></div>
-        </section>
+        <div id="list-container" class="examples"></div>
+        <div id="solve-container" class="examples hidden"></div>
     </div>
-
-    <!-- Анимация завершения -->
-    <div id="celebration" class="celebration">
-        <div class="message animate__animated"></div>
-    </div>
-
     <script src="script.js"></script>
-    <script src="math-logic.js"></script>
-    <script src="lang-logic.js"></script>
 </body>
 </html>
