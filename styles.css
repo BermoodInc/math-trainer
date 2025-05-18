@@ -1,276 +1,79 @@
-/* Общие стили */
-:root {
-  --math-color: #ff6b6b;
-  --lang-color: #00b7ff;
-  --bg-light: #fff9e6;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 body {
-  font-family: 'Comic Neue', cursive;
-  margin: 0;
-  padding: 20px;
-  min-height: 100vh;
-  transition: background 0.5s;
+    font-family: 'Comic Sans MS', cursive;
+    background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    min-height: 100vh;
+    padding: 20px;
+    margin: 0;
 }
 
-/* Навигация */
-.main-nav {
-  text-align: center;
-  margin: 2rem auto;
-  max-width: 800px;
-}
-
-.nav-btn {
-  padding: 1rem 2rem;
-  margin: 0 0.5rem;
-  border: none;
-  border-radius: 15px;
-  background: #ff9f43;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-size: 1.1rem;
-}
-
-.nav-btn.active {
-  background: var(--math-color);
-  transform: scale(1.1);
-}
-
-.nav-btn[data-section="lang"].active {
-  background: var(--lang-color);
-}
-
-/* Основной контейнер */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-/* Секции */
-.content-section {
-  display: none;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+.controls {
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
 }
 
-.content-section.active {
-  display: block;
-  animation: fadeIn 0.5s;
+input, button {
+    padding: 10px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+button {
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
 }
 
-/* Математика */
-.math-controls {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 2rem;
+button:hover {
+    transform: scale(1.05);
+    background: #45a049;
 }
 
-.math-input-group {
-  display: flex;
-  gap: 10px;
-  align-items: center;
+.examples {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
 }
 
-.math-input {
-  width: 80px;
-  padding: 10px;
-  border: 2px solid var(--math-color);
-  border-radius: 10px;
-  font-size: 1.1rem;
-  text-align: center;
+.example {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-size: 18px;
 }
 
-.examples-container {
-  display: grid;
-  gap: 1.5rem;
+.missing {
+    display: inline-block;
+    width: 50px;
+    border-bottom: 2px solid #333;
+    margin: 0 5px;
+    text-align: center;
 }
 
-.example-group {
-  padding: 20px;
-  background: #fff3f3;
-  border-radius: 15px;
+input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
 }
 
-.group-title {
-  color: var(--math-color);
-  margin: 0 0 1rem 0;
+.mode-buttons {
+    margin: 15px 0;
+    text-align: center;
 }
 
-/* Интерактивные примеры */
-.interactive-card {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.2);
-  margin-bottom: 1rem;
-}
-
-.equation {
-  font-size: 1.5rem;
-  text-align: center;
-  margin: 1rem 0;
-}
-
-.math-input-field {
-  width: 60px;
-  padding: 10px;
-  border: 2px solid var(--math-color);
-  border-radius: 8px;
-  font-size: 1.2rem;
-  text-align: center;
-  margin: 0 5px;
-}
-
-.check-btn {
-  background: var(--math-color);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.check-btn:hover {
-  transform: scale(1.05);
-}
-
-/* Русский язык */
-.lang-controls {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.length-btn {
-  background: var(--lang-color);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.word-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0, 183, 255, 0.2);
-  text-align: center;
-  margin: 1rem;
-  position: relative;
-}
-
-.word-display {
-  font-size: 2rem;
-  letter-spacing: 10px;
-  margin: 1rem 0;
-}
-
-.letter-slot {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  border: 2px dashed var(--lang-color);
-  margin: 5px;
-  line-height: 50px;
-  font-size: 24px;
-  cursor: pointer;
-  position: relative;
-}
-
-.letter-options {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 1rem 0;
-}
-
-.letter-option {
-  width: 40px;
-  height: 40px;
-  background: var(--lang-color);
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  transition: all 0.3s;
-}
-
-.letter-option:hover {
-  transform: scale(1.1);
-}
-
-/* Анимации */
-@keyframes confetti {
-  0% { transform: translateY(0) rotate(0); }
-  100% { transform: translateY(-100vh) rotate(360deg); }
-}
-
-.celebration {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.celebration-message {
-  background: white;
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  font-size: 1.5rem;
-  text-align: center;
-  z-index: 1001;
-}
-
-.confetti {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  animation: confetti 2s linear forwards;
-}
-
-.correct {
-  animation: bounce 0.5s;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.wrong {
-  animation: shake 0.5s;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  75% { transform: translateX(10px); }
+.hidden {
+    display: none;
 }
