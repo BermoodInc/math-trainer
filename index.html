@@ -2,26 +2,38 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Образовательное приложение</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Звероматика</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <div class="controls">
-            <input type="number" id="min" placeholder="Минимум" min="1">
-            <input type="number" id="max" placeholder="Максимум" min="1">
-            <button onclick="generateExamples()">Сгенерировать</button>
-            <button onclick="clearAll()">Очистить</button>
-        </div>
+        <h1>🐾 Звероматика 🦁</h1>
         
-        <div class="mode-buttons">
-            <button onclick="showList()">Список примеров</button>
-            <button onclick="showSolve()">Решать</button>
+        <!-- Панель управления -->
+        <div class="control-panel">
+            <div class="input-group">
+                <label>
+                    <span>От:</span>
+                    <input type="number" id="min" value="1" min="1" class="animal-input">
+                </label>
+                <label>
+                    <span>До:</span>
+                    <input type="number" id="max" value="6" min="2" class="animal-input">
+                </label>
+            </div>
+            
+            <div class="button-group">
+                <button onclick="generateExamples()" class="generate-btn">🎉 Новые примеры</button>
+                <button onclick="clearExamples()" class="clear-btn">🌈 Очистить</button>
+            </div>
         </div>
 
-        <div id="list-container" class="examples"></div>
-        <div id="solve-container" class="examples hidden"></div>
+        <!-- Контейнер для примеров -->
+        <div id="examples" class="examples-grid"></div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
